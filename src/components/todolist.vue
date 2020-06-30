@@ -3,15 +3,19 @@
     <div>
       TaskList
     </div>
-    <div class="Task">
-      <div class="Title">
-        状態 名称 締め切り
-      </div>
-      <div v-for="Task in Tasks" :key="Task.name">
+    <div class="Title">
+      状態 名称 締め切り
+    </div>
+    <div v-for="Task in Tasks" :key="Task.name">
+      <div class="Task">
         <div class="Tasks">
-          {{ Task.isCompleted }}
+          <span v-if="Task.isCompleted == true">完了</span>
+          <span v-else>未完了</span>
           {{ Task.name }}
           {{ Task.deadLine }}
+          <span v-if="Task.isCompleted == false">
+            <button @click="Complete(Task)">完了</button>
+          </span>
         </div>
       </div>
     </div>
@@ -42,10 +46,13 @@ export default {
   methods: {
     addTask() {
       this.Tasks.push({
-        isCompleted: "未完了",
+        isCompleted: false,
         name: this.newTaskName,
         deadLine: this.newDeadLine,
       });
+    },
+    Complete(Task) {
+      Task.isCompleted = true;
     },
   },
 };
